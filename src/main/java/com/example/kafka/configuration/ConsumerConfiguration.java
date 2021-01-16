@@ -43,7 +43,6 @@ public class ConsumerConfiguration {
     public Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "json");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
@@ -78,10 +77,8 @@ public class ConsumerConfiguration {
 
             logger.error("An error occurred: {} with data: {}", exception.getMessage(), record);
             this.templateData.send(record.topic() + ".DLT", (Data) record.value()); // Send message to Dead Letter Topic
-        }, new FixedBackOff(1000L, 3L));
-
-        seekToCurrentErrorHandler.setAckAfterHandle(true); // Commit message that have been successfully
-
+        }, new FixedBackOff(1000L, 3L)); // Min time between attempts; total number of attempts
+        seekToCurrentErrorHandler.setAckAfterHandle(true); // Commit messages that have been successfully recovered
         factory.setErrorHandler(seekToCurrentErrorHandler);
 
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
