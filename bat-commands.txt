@@ -1,0 +1,8 @@
+.\bin\windows\kafka-console-producer.bat --topic messages --bootstrap-server localhost:9092
+
+
+# Consume messages.DLT topic
+.\bin\windows\kafka-console-consumer.bat --topic messages.DLT --from-beginning --bootstrap-server localhost:9092
+
+# Consume messages.deserialization.DLT topic
+.\bin\windows\kafka-console-consumer.bat --topic messages.deserialization.DLT --from-beginning --bootstrap-server localhost:9092

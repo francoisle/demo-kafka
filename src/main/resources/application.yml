@@ -1,0 +1,8 @@
+server:
+  port: 9000
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+logging:
+  pattern:
+    console: "%highlight(%-5level) %msg%n"
